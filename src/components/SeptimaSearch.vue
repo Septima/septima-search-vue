@@ -84,7 +84,7 @@ function onClear() {
     class="container"
     :class="{ active: active }"
     @mouseenter="hover = true"
-    @mouseleave="hover = true"
+    @mouseleave="hover = false"
   >
     <span class="inputbar">
       <ChipLabel

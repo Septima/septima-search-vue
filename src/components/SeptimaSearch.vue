@@ -18,9 +18,9 @@ const emit = defineEmits<{
 const input = ref()
 const active = ref(false)
 const hover = ref(false)
-const clear = ref(true)
+const clear = ref(false)
 const loading = ref(false)
-const chip = ref(true)
+const chip = ref(false)
 const source = ref(undefined)
 const type: Ref<any> = ref({ plural: 'None' })
 
@@ -41,6 +41,7 @@ async function doSearch(queryString: string) {
     )
     results.value = queryResult.getAllResults()
     lastQueryString = queryString
+    clear.value = queryString.length > 0
   } finally {
     loading.value = false
   }
@@ -103,8 +104,8 @@ function onClear() {
         @focusout="active = false"
       />
       <LoadingIndicator v-if="loading" />
-      <ClearIcon v-if="clear && !loading" class="icon" @click="onClear" />
-      <SearchIcon v-if="!clear && !loading" />
+      <ClearIcon v-if="clear && !loading" class="clear icon" @click="onClear" />
+      <SearchIcon v-if="!clear && !loading" class="icon" />
     </span>
     <div v-if="hover || active" class="results">
       <ResultItem
@@ -123,6 +124,10 @@ function onClear() {
   border: 1px solid #aaaaaa;
   background-color: white;
   overflow: hidden;
+}
+
+.clear {
+  cursor: pointer;
 }
 
 .results {
@@ -155,16 +160,21 @@ function onClear() {
 }
 
 .chip {
+  flex: 1 0 auto;
   margin-left: 0.5rem;
 }
 
 .loading {
+  flex: 1 0 auto;
   opacity: 0.75;
   width: 3.5rem;
 }
 
 .icon {
+  flex: 1 0 auto;
   opacity: 0.75;
   margin: 0rem 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 </style>

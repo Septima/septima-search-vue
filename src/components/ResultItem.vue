@@ -23,16 +23,12 @@ const active = ref(false)
     @mouseout="active = false"
     @click="emit('selectresult', result)"
   >
-    <i class="resulticon">
-      <ResultIcon :result="result" />
-    </i>
+    <ResultIcon class="resulticon" :result="result" />
     <div class="heading">
       <div class="title">{{ result.title }}</div>
       <div class="subtitle">{{ result.description }}</div>
     </div>
-    <i v-if="more" class="icon">
-      <MoreIcon />
-    </i>
+    <MoreIcon v-if="more" class="icon" />
   </span>
 </template>
 
@@ -57,23 +53,23 @@ const active = ref(false)
   text-overflow: ellipsis;
 }
 .subtitle {
-  font: 0.8rem / 1.5 sans-serif;
+  font: 0.75rem / 1.5 sans-serif;
   color: gray;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .icon {
   opacity: 0.75;
-  height: 1rem;
-  width: 1rem;
-  margin-right: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.25rem;
 }
 
 .resulticon {
   opacity: 0.65;
   height: 1rem;
   width: 1rem;
-  margin-top: -0.2rem;
+  margin-top: -0.1rem;
   margin-left: 1rem;
 }
 </style>

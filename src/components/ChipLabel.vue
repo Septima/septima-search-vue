@@ -11,12 +11,7 @@ const emit = defineEmits<{
 <template>
   <div class="chip">
     <span class="text">{{ type.plural }}</span>
-    <ClearIcon
-      tabindex="0"
-      class="icon"
-      fill="white"
-      @click="emit('clickclear')"
-    />
+    <ClearIcon tabindex="0" class="icon" fill="white" @click="emit('clickclear')" />
   </div>
 </template>
 <style scoped>

@@ -18,13 +18,10 @@ import App from './App.vue'
   ],
 }*/
 
-const Controller = (
-  await import('@septima/septima-search/src/js/Controller.js')
-).default as any
+const Controller = (await import('@septima/septima-search/src/js/Controller.js')).default as any
 const controller = new Controller([], { blankBehavior: 'search' })
-const S3Searcher = (
-  await import('@septima/septima-search/src/js/searchers/S3Searcher.js')
-).default as any
+const S3Searcher = (await import('@septima/septima-search/src/js/searchers/S3Searcher.js'))
+  .default as any
 const s3searcher = new S3Searcher({
   showPdfLink: true,
   showLinkToWeb: true,

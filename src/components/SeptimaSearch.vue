@@ -31,14 +31,8 @@ async function doSearch(queryString: string) {
   try {
     loading.value = true
     results.value = []
-    const queryResult = await props.controller.fetchData(
-      queryString,
-      null,
-      null,
-      null,
-      source.value,
-      type.value?.id
-    )
+    const fetchDataArgs = [queryString, null, null, null, source.value, type.value?.id]
+    const queryResult = await props.controller.fetchData(...fetchDataArgs)
     results.value = queryResult.getAllResults()
     lastQueryString = queryString
     clear.value = queryString.length > 0
@@ -80,19 +74,9 @@ function onClear() {
 </script>
 
 <template>
-  <div
-    class="container"
-    :class="{ active: active }"
-    @mouseenter="hover = true"
-    @mouseleave="hover = false"
-  >
+  <div class="container" :class="{ active }" @mouseenter="hover = true" @mouseleave="hover = false">
     <span class="inputbar">
-      <ChipLabel
-        v-if="chip"
-        class="chip"
-        :type="type"
-        @clickclear="onChipClickClear"
-      ></ChipLabel>
+      <ChipLabel v-if="chip" class="chip" :type="type" @clickclear="onChipClickClear"></ChipLabel>
       <input
         ref="input"
         class="inputtext"

@@ -11,10 +11,7 @@ const result = ref()
 
 <template>
   <div id="search">
-    <SeptimaSearch
-      :controller="controller"
-      @selectresult="result = $event"
-    ></SeptimaSearch>
+    <SeptimaSearch :controller="controller" @selectresult="result = $event"></SeptimaSearch>
   </div>
   <div id="result">{{ JSON.stringify(result, null, '\t') }}</div>
 </template>

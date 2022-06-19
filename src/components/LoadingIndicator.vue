@@ -19,8 +19,8 @@
   text-indent: -9999em;
   transform: translateZ(0);
   animation-delay: -0.16s;
-  transform: translate(1rem, -0.75rem);
-  color: #000000;
+  transform: translate(-1.5rem, -0.75rem);
+  color: gray;
 }
 .loader:before,
 .loader:after {

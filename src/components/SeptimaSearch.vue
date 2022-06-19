@@ -15,13 +15,14 @@ const emit = defineEmits<{
   (e: 'selectresult', result: any): void
 }>()
 
+const input = ref()
 const active = ref(false)
 const hover = ref(false)
-const clear = ref(false)
+const clear = ref(true)
 const loading = ref(false)
-const chip = ref(false)
+const chip = ref(true)
 const source = ref(undefined)
-const type: Ref<any> = ref(undefined)
+const type: Ref<any> = ref({ plural: 'None' })
 
 let lastQueryString = ''
 const results: Ref<any[]> = ref([])
@@ -64,11 +65,16 @@ function onSelectResult(result: any) {
   emit('selectresult', result)
 }
 
-function onClickClear() {
+function onChipClickClear() {
   chip.value = false
   source.value = undefined
   type.value = undefined
   doSearch(lastQueryString)
+}
+
+function onClear() {
+  input.value.value = ''
+  doSearch('')
 }
 </script>
 
@@ -80,10 +86,14 @@ function onClickClear() {
     @mouseleave="hover = true"
   >
     <span class="inputbar">
-      <i v-if="chip" class="chip">
-        <ChipLabel :type="type" @clickclear="onClickClear"></ChipLabel>
-      </i>
+      <ChipLabel
+        v-if="chip"
+        class="chip"
+        :type="type"
+        @clickclear="onChipClickClear"
+      ></ChipLabel>
       <input
+        ref="input"
         class="inputtext"
         type="text"
         placeholder="Søg"
@@ -92,13 +102,9 @@ function onClickClear() {
         @focusin="active = true"
         @focusout="active = false"
       />
-      <i v-if="loading" class="loading">
-        <LoadingIndicator />
-      </i>
-      <i v-else class="icon">
-        <ClearIcon v-if="clear" />
-        <SearchIcon v-else />
-      </i>
+      <LoadingIndicator v-if="loading" />
+      <ClearIcon v-if="clear && !loading" class="icon" @click="onClear" />
+      <SearchIcon v-if="!clear && !loading" />
     </span>
     <div v-if="hover || active" class="results">
       <ResultItem
@@ -149,7 +155,7 @@ function onClickClear() {
 }
 
 .chip {
-  padding-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .loading {
@@ -159,8 +165,6 @@ function onClickClear() {
 
 .icon {
   opacity: 0.75;
-  height: 1.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  margin: 0rem 0.5rem;
 }
 </style>

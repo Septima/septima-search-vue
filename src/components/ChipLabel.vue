@@ -26,14 +26,11 @@ const emit = defineEmits<{
   color: white;
   align-items: center;
   font: 0.8rem sans-serif;
-  padding: 0.1rem;
-  margin: 0px;
+  padding: 0.1rem 0.15rem 0.1rem 0.3rem;
   border: 1px solid gray;
   background-color: gray;
   border-radius: 3px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .icon {
   cursor: pointer;

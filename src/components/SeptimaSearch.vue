@@ -76,17 +76,16 @@ function onClear() {
 <template>
   <div class="s-search" :class="{ active }" @mouseenter="hover = true" @mouseleave="hover = false">
     <!-- input -->
-    <div class="s-search-field">
-      <ChipLabel v-if="chip" class="s-search-field__badge" :type="type" @clickclear="onChipClickClear"></ChipLabel>
+    <div class="s-search__field">
+      <ChipLabel v-if="chip" class="s-search-badges" :type="type" @clickclear="onChipClickClear"></ChipLabel>
       <input
         ref="input"
-        class="s-search-field__input"
+        class="s-search-input"
         type="text"
         placeholder="Søg"
         aria-label="Søgefelt"
         aria-controls="sSearchResult"
-        aria-autocomplete="both"
-        aria-expanded="false"
+        :aria-expanded="hover || active ? true : false"
         id="sSearchInput" 
         role="combobox"
         @keyup="onKeyUp"
@@ -94,17 +93,17 @@ function onClear() {
         @focusin="active = true"
         @focusout="active = false"
       />
-      <LoadingIndicator v-if="loading" />
-      <button v-if="clear && !loading" @click="onClear" type="button" class="s-search-field__clear">
+      <LoadingIndicator v-if="loading" class="s-search-loader" />
+      <button v-if="clear && !loading" @click="onClear" type="button" class="s-search-clear">
         <ClearIcon />
       </button>
-      <SearchIcon v-if="!clear && !loading" class="s-search-field__loop" />
+      <SearchIcon v-if="!clear && !loading" class="s-search-icon" />
     </div>
     <!-- result -->
     <ul 
       v-if="hover || active" 
       id="sSearchResult"
-      class="s-search-result" 
+      class="s-search__result" 
       aria-label="Resultater"
       role="listbox"
       aria-live="polite"
@@ -117,33 +116,6 @@ function onClear() {
       ></ResultItem>
     </ul>
   </div>
-<!-- 
-  <div class="container" :class="{ active }" @mouseenter="hover = true" @mouseleave="hover = false">
-    <span class="inputbar">
-      <ChipLabel v-if="chip" class="chip" :type="type" @clickclear="onChipClickClear"></ChipLabel>
-      <input
-        ref="input"
-        class="inputtext"
-        type="text"
-        placeholder="Søg"
-        @keyup="onKeyUp"
-        @click="onClick"
-        @focusin="active = true"
-        @focusout="active = false"
-      />
-      <LoadingIndicator v-if="loading" />
-      <ClearIcon v-if="clear && !loading" class="clear icon" @click="onClear" />
-      <SearchIcon v-if="!clear && !loading" class="icon" />
-    </span>
-    <div v-if="hover || active" class="results">
-      <ResultItem
-        v-for="result in results"
-        :key="result.id"
-        :result="result"
-        @selectresult="onSelectResult"
-      ></ResultItem>
-    </div>
-  </div> -->
 </template>
 
 <style scoped lang="scss">
@@ -159,17 +131,17 @@ function onClear() {
   overflow: hidden;
   max-width: 100%;
   width: 20rem;
-  &-field {
+  &__field {
     display: flex;
     align-items: center;
     height: 2.5rem;
     margin-right: 0.5rem;
     box-sizing: border-box;
-    &__badge {
+    .#{$prefix}-search-badges {
       flex: 1 0 auto;
       margin-left: 0.5rem;
     }
-    &__input {
+    .#{$prefix}-search-input {
       appearance: none;
       border: none;
       margin: 0;
@@ -183,7 +155,7 @@ function onClear() {
       }
     }
     // actions
-    &__clear {
+    .#{$prefix}-search-clear {
       line-height: 1;
       padding: 0;
       display: flex;
@@ -192,15 +164,18 @@ function onClear() {
         cursor: pointer;
       }
     }
-    // &__loop { //ikoner har samme style
-    //   flex: 1 0 auto;
-    //   opacity: 0.75;
-    //   margin: 0rem 0.5rem;
-    //   width: 1.25rem;
-    //   height: 1.25rem;
-    // }
+    .#{$prefix}-search-loading {
+      background-color: red;
+    }
+    .#{$prefix}-search-icon { //ikoner har samme style
+      flex: 1 0 auto;
+      opacity: 0.75;
+      // margin: 0rem 0.5rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
-  &-result {
+  &__result {
     margin: 0;
     padding: 0;
     overflow: auto;

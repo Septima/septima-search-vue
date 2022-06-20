@@ -1,5 +1,5 @@
 <template>
-  <div class="loader"></div>
+  <div class="loader" aria-live="polite"></div>
 </template>
 
 <style scoped>

@@ -16,8 +16,9 @@ const active = ref(false)
 </script>
 
 <template>
-  <span
+  <li
     class="resultitem"
+    role="option"
     :class="{ active }"
     @mouseover="active = true"
     @mouseout="active = false"
@@ -29,7 +30,7 @@ const active = ref(false)
       <div class="subtitle">{{ result.description }}</div>
     </div>
     <MoreIcon v-if="more" class="icon" />
-  </span>
+  </li>
 </template>
 
 <style scoped>

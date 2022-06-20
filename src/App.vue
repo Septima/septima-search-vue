@@ -13,7 +13,7 @@ const result = ref()
   <div id="search">
     <SeptimaSearch :controller="controller" @selectresult="result = $event"></SeptimaSearch>
   </div>
-  <div id="result">{{ JSON.stringify(result, null, '\t') }}</div>
+  <pre id="result">{{ JSON.stringify(result, null, '\t') }}</pre>
 </template>
 
 <style>
@@ -40,9 +40,15 @@ body {
 #search {
   flex: 1;
   min-width: 20rem;
+  position: fixed; 
+  top: 2rem;
+  left: 2rem;
+  z-index: 99;
 }
 #result {
   flex: 1;
   padding: 0rem 2rem;
+  position: absolute;
+  top: 6rem;
 }
 </style>

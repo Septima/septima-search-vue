@@ -1,0 +1,21 @@
+@use "sass:math";
+/*
+ * Mixins
+ */
+
+// Check if $color is bright or dark
+@function text-color-from-color($value) {
+    @if (lightness($value) > 50) {
+        @return black;
+    } @else {
+        @return white;
+    }
+}
+
+// Color changes true (replaces darken, lighten)
+@function tint-color($color, $weight) {
+    @return mix(white, $color, $weight);
+}
+@function shade-color($color, $weight) {
+    @return mix(black, $color, $weight);
+}

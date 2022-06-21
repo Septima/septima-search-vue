@@ -1,0 +1,78 @@
+@use "sass:math";
+@use '_mixins.scss' as *;
+
+/*
+ * Variabler (Base file)
+ */
+
+/* ------- Color ------- */
+$primary: #0A2D3B;
+$secondary: #00A6D1;
+$success: rgb(29, 192, 136);
+$danger: rgb(230, 55, 87);
+$warning: rgb(246, 195, 67);
+$info: rgb(57, 175, 209);
+$light: rgb(237, 242, 249);
+$dark: rgb(41, 45, 62);
+$black: rgb(0, 0, 0);
+$white: rgb(255, 255, 255);
+
+$colors-map: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning,
+  "info": $info,
+  "light": $light,
+  "dark": $dark,
+  "black": $black,
+  "white": $white,
+);
+
+/* ------- Utility ------- */
+
+// Border-radius
+$border-radius: 0.25em;
+
+// Border colors
+$border-color: shade-color($light, 10%);
+
+// Spacer
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+);
+
+/* ------- Global ------- */
+$prefix: 's'; //namespacing 's' for septima
+
+$tint-base-amount: .25;
+
+$box-shadow: 0 .5rem 1rem rgba($black, .15);
+$box-shadow-sm: 0 .125rem .25rem rgba($black, .075);
+$box-shadow-lg: 0 1rem 3rem rgba($black, .175);
+$box-shadow-inset: inset 0 1px 2px rgba($black, .075);
+
+$divider-color: $border-color;
+$divider-height: 1px;
+
+/* ------- Typography ------- */
+// $font-family: Arial, Helvetica, sans-serif;
+$font-family: 'Lato', sans-serif;
+$text-muted: tint-color($dark, 25%);
+
+/* ------- Forms ------- */
+$form-elements-height: 1.5rem;
+
+/* ------- Button ------- */
+$button-height: $form-elements-height;
+
+/* ------- Grid ------- */
+// $avatar-border-radius: $border-radius;
+// $avatar-height-width: 2.5em;

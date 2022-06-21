@@ -74,79 +74,118 @@ function onClear() {
 </script>
 
 <template>
-  <div class="container" :class="{ active }" @mouseenter="hover = true" @mouseleave="hover = false">
-    <span class="inputbar">
-      <ChipLabel v-if="chip" class="chip" :type="type" @clickclear="onChipClickClear"></ChipLabel>
+  <div class="s-search" :class="{ active }" @mouseenter="hover = true" @mouseleave="hover = false">
+    <!-- input -->
+    <div class="s-search__field">
+      <ChipLabel v-if="chip" class="s-search-badges" :type="type" @clickclear="onChipClickClear"></ChipLabel>
       <input
         ref="input"
-        class="inputtext"
+        class="s-search-input"
         type="text"
         placeholder="Søg"
+        aria-label="Søgefelt"
+        aria-controls="sSearchResult"
+        :aria-expanded="hover || active ? true : false"
+        id="sSearchInput" 
+        role="combobox"
         @keyup="onKeyUp"
         @click="onClick"
         @focusin="active = true"
         @focusout="active = false"
       />
-      <LoadingIndicator v-if="loading" />
-      <ClearIcon v-if="clear && !loading" class="clear icon" @click="onClear" />
-      <SearchIcon v-if="!clear && !loading" class="icon" />
-    </span>
-    <div v-if="hover || active" class="results">
+      <LoadingIndicator v-if="loading" class="s-search-loader" />
+      <button v-if="clear && !loading" @click="onClear" type="button" class="s-search-clear">
+        <ClearIcon />
+      </button>
+      <SearchIcon v-if="!clear && !loading" class="s-search-icon" />
+    </div>
+    <!-- result -->
+    <ul 
+      v-if="hover || active" 
+      id="sSearchResult"
+      class="s-search__result" 
+      aria-label="Resultater"
+      role="listbox"
+      aria-live="polite"
+    >
       <ResultItem
         v-for="result in results"
         :key="result.id"
         :result="result"
         @selectresult="onSelectResult"
       ></ResultItem>
-    </div>
+    </ul>
   </div>
 </template>
 
-<style scoped>
-.container {
-  font: 0.8rem sans-serif;
-  border: 1px solid #aaaaaa;
+<style scoped lang="scss">
+@use '../style/_variables.scss' as *;
+
+.#{$prefix}-search {
+  font-size: 0.8rem;
+  font-family: sans-serif;
+  border: 1px solid $border-color;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
   background-color: white;
   overflow: hidden;
+  max-width: 100%;
+  width: 20rem;
+  &__field {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    box-sizing: border-box;
+    .#{$prefix}-search-badges {
+      flex: 1 0 auto;
+      margin-left: 0.5rem;
+    }
+    .#{$prefix}-search-input {
+      appearance: none;
+      border: none;
+      margin: 0;
+      font-size: 0.8rem;
+      box-sizing: border-box;
+      width: 100%;
+      padding-left: 0.5rem;
+      height: inherit;
+      &:focus {
+        outline: none;
+      }
+    }
+    // actions
+    .#{$prefix}-search-clear {
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      border: 0;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .#{$prefix}-search-loading {
+      background-color: red;
+    }
+    .#{$prefix}-search-icon { //ikoner har samme style
+      flex: 1 0 auto;
+      opacity: 0.75;
+      // margin: 0rem 0.5rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+  &__result {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    max-height: 30rem;
+  }
+  &.active {
+    border: 1px solid $dark;
+  }
 }
 
-.clear {
-  cursor: pointer;
-}
-
-.results {
-  overflow: auto;
-  max-height: 30rem;
-}
-
-.active {
-  box-shadow: 0 0 4px #aaa;
-}
-
-.inputtext {
-  appearance: none;
-  border: none;
-  margin: 0;
-  font: 0.8rem sans-serif;
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: 0.5rem;
-}
-
-.inputtext:focus {
-  outline: none;
-}
-
-.inputbar {
-  display: flex;
-  align-items: center;
-  height: 2.5rem;
-}
-
-.chip {
-  flex: 1 0 auto;
-  margin-left: 0.5rem;
-}
 
 .loading {
   flex: 1 0 auto;
@@ -154,11 +193,4 @@ function onClear() {
   width: 3.5rem;
 }
 
-.icon {
-  flex: 1 0 auto;
-  opacity: 0.75;
-  margin: 0rem 0.5rem;
-  width: 1.25rem;
-  height: 1.25rem;
-}
 </style>

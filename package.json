@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@septima/septima-search": "^5.30.81",
+    "sass": "^1.52.3",
     "vue": "^3.2.36"
   },
   "devDependencies": {

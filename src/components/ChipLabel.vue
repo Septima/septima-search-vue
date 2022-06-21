@@ -11,10 +11,12 @@ const emit = defineEmits<{
 <template>
   <div class="chip">
     <span class="text">{{ type.plural }}</span>
-    <ClearIcon tabindex="0" class="icon" fill="white" @click="emit('clickclear')" />
+    <button @click="emit('clickclear')" class="clear">
+      <ClearIcon class="icon" fill="white"/>
+    </button>
   </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
 .chip {
   display: flex;
   user-select: none;
@@ -27,11 +29,22 @@ const emit = defineEmits<{
   border-radius: 3px;
   white-space: nowrap;
 }
-.icon {
-  cursor: pointer;
+
+.clear {
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  border: 0;
   margin-left: 0.5rem;
-  color: white;
-  width: 1rem;
-  height: 1rem;
+  background-color: transparent;
+  .icon {
+    cursor: pointer;
+    color: white;
+    width: 1rem;
+    height: 1rem;
+  }
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>
